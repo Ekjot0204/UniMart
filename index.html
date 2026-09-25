@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniMart</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#081525;--blue:#2563eb;--light:#f5f8fc;--text:#172033;--muted:#667085;--line:#e7ecf3;--white:#fff}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--light);color:var(--text);line-height:1.5}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.container{width:min(1160px,92%);margin:auto}
+.nav{height:72px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;position:sticky;top:0;z-index:20}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:25px}
+.logo{font-size:25px;font-weight:800;color:var(--navy)}
+.logo span{color:var(--blue)}
+.nav-links{display:flex;align-items:center;gap:24px}
+.nav-links a{font-size:14px;font-weight:600;color:#475467}
+.nav-links a:hover,.nav-links a.active{color:var(--blue)}
+.nav-actions{display:flex;gap:10px;align-items:center}
+.btn{border:0;border-radius:10px;padding:11px 17px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:#1d4ed8}
+.btn-outline{background:#fff;color:var(--navy);border:1px solid #d5dce6}
+.btn-dark{background:var(--navy);color:#fff}
+.hero{padding:82px 0 74px;background:linear-gradient(135deg,#eef5ff,#fff)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center}
+.eyebrow{color:var(--blue);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:15px}
+h1{font-size:clamp(42px,6vw,68px);line-height:1.03;letter-spacing:-2.5px;color:var(--navy);margin-bottom:20px}
+h2{font-size:34px;line-height:1.15;color:var(--navy);margin-bottom:12px}
+h3{color:var(--navy)}
+.hero p,.section-head p{color:var(--muted);font-size:17px;max-width:650px}
+.hero-buttons{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:0 20px 50px rgba(16,24,40,.08)}
+.hero-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.badge{background:#eaf2ff;color:var(--blue);padding:6px 10px;border-radius:99px;font-size:12px;font-weight:800}
+.item-preview{display:flex;align-items:center;gap:15px;padding:15px;border:1px solid var(--line);border-radius:15px;margin-top:12px}
+.item-icon{width:54px;height:54px;border-radius:13px;background:#edf4ff;display:grid;place-items:center;font-size:27px}
+.price{margin-left:auto;font-weight:800;color:var(--navy)}
+.section{padding:72px 0}
+.section-head{text-align:center;margin-bottom:36px}
+.section-head p{margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px}
+.category-card{text-align:center}
+.category-card .item-icon{margin:0 auto 14px}
+.category-card p{color:var(--muted);font-size:14px}
+.market-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.product{background:#fff;border:1px solid var(--line);border-radius:17px;overflow:hidden}
+.product-img{height:170px;background:linear-gradient(135deg,#eaf2ff,#f8fbff);display:grid;place-items:center;font-size:62px}
+.product-body{padding:18px}
+.product-body p{color:var(--muted);font-size:13px;margin:5px 0 14px}
+.product-foot{display:flex;justify-content:space-between;align-items:center}
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:24px}
+.filter{border:1px solid #d6deea;background:#fff;padding:9px 14px;border-radius:99px;font-weight:700;font-size:13px}
+.filter.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.page-hero{padding:62px 0;background:#eef5ff}
+.page-hero h1{font-size:48px;margin-bottom:10px}
+.page-hero p{color:var(--muted);max-width:700px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step-num{width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:800;margin-bottom:16px}
+.dark-cta{background:var(--navy);color:#fff;border-radius:24px;padding:50px}
+.dark-cta h2{color:#fff}.dark-cta p{color:#b9c4d5;margin:10px 0 24px}
+.form-wrap{max-width:650px;margin:auto;background:#fff;border:1px solid var(--line);padding:30px;border-radius:18px}
+.form-group{margin-bottom:17px}
+label{display:block;font-weight:700;font-size:13px;margin-bottom:7px}
+input,select,textarea{width:100%;padding:12px 13px;border:1px solid #d5dce6;border-radius:9px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+footer{background:#fff;border-top:1px solid var(--line);padding:28px 0;margin-top:50px}
+.footer-inner{display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:13px}
+.empty{padding:40px;text-align:center;color:var(--muted);grid-column:1/-1}
+.modal-backdrop{position:fixed;inset:0;background:rgba(5,15,30,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;width:min(520px,100%);border-radius:18px;padding:27px;position:relative}
+.close{position:absolute;right:18px;top:14px;border:0;background:transparent;font-size:24px}
+.modal h2{font-size:27px;padding-right:30px}
+.total-box{background:#f5f8fc;border-radius:12px;padding:14px;margin:16px 0;font-weight:700}
+.toast{position:fixed;right:22px;bottom:22px;background:var(--navy);color:#fff;padding:13px 17px;border-radius:10px;display:none;z-index:70}
+.toast.show{display:block}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.cards,.market-grid,.steps{grid-template-columns:repeat(2,1fr)}.nav-links{display:none}}
+@media(max-width:560px){.cards,.market-grid,.steps{grid-template-columns:1fr}.container > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important}.nav-actions .btn-outline{display:none}.hero{padding-top:55px}.page-hero h1{font-size:39px}.footer-inner{flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="modal-backdrop" id="rentModal">
+  <div class="modal">
+    <button class="close" onclick="closeRent()">×</button>
+    <h2>Rent <span id="rentName"></span></h2>
+    <p style="color:#667085;margin:6px 0 20px">Choose your rental period.</p>
+    <div class="form-group"><label>Start date</label><input type="date" id="startDate"></div>
+    <div class="form-group"><label>Return date</label><input type="date" id="endDate"></div>
+    <div class="total-box" id="totalBox">Select dates to calculate the rental total.</div>
+    <button class="btn btn-primary" style="width:100%" onclick="confirmRent()">Confirm rental request</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const products=[
+ {id:1,name:"Laptop",cat:"Electronics",price:450,icon:"💻"},
+ {id:2,name:"Engineering Books",cat:"Books",price:50,icon:"📚"},
+ {id:3,name:"DSLR Camera",cat:"Cameras",price:500,icon:"📷"},
+ {id:4,name:"Badminton Kit",cat:"Sports",price:150,icon:"🏸"},
+ {id:5,name:"Power Drill",cat:"Tools",price:200,icon:"🔧"},
+ {id:6,name:"Gaming Console",cat:"Electronics",price:350,icon:"🎮"},
+ {id:7,name:"Football Kit",cat:"Sports",price:100,icon:"⚽"},
+ {id:8,name:"Tool Kit",cat:"Tools",price:120,icon:"🧰"}
+];
+
+function getAllProducts(){
+ const saved=JSON.parse(localStorage.getItem("unimartListings")||"[]");
+ const icons={Electronics:"💻",Books:"📚",Cameras:"📷",Sports:"🏸",Tools:"🔧"};
+ const userItems=saved.map((x,i)=>({id:"user-"+i,name:x.name,cat:x.category,price:Number(x.price),icon:icons[x.category]||"📦",description:x.description||"",userListed:true}));
+ return products.concat(userItems);
+}
+function currentUser(){
+ try{return JSON.parse(localStorage.getItem("unimartCurrentUser")||"null")}catch(e){return null}
+}
+
+
+function route(){
+ const page=new URLSearchParams(location.search).get("page")||"landing";
+ render(page);
+ window.scrollTo(0,0);
+}
+window.addEventListener("popstate",route);
+function go(page){
+ history.pushState({}, "", "?page="+page);
+ route();
+}
+function nav(active){
+ const u=currentUser();
+ const account=u
+  ? `<span style="font-weight:700;color:#172033;white-space:nowrap">Hi, ${escapeHtml(u.name.split(" ")[0])}!</span><button class="btn btn-outline" onclick="logoutUser()">Log out</button>`
+  : `<a class="btn btn-outline" href="?page=login" onclick="event.preventDefault();go('login')">Log in</a><a class="btn btn-primary" href="?page=signup" onclick="event.preventDefault();go('signup')">Sign up</a>`;
+ return `<header class="nav"><div class="container nav-inner">
+  <a class="logo" href="?page=landing" onclick="event.preventDefault();go('landing')">Uni<span>Mart</span></a>
+  <nav class="nav-links">
+   <a class="${active==='home'?'active':''}" href="?page=home" onclick="event.preventDefault();go('home')">Home</a>
+   <a class="${active==='browse'?'active':''}" href="?page=browse" onclick="event.preventDefault();go('browse')">Browse</a>
+   <a class="${active==='how'?'active':''}" href="?page=how" onclick="event.preventDefault();go('how')">How It Works</a>
+   <a class="${active==='lend'?'active':''}" href="?page=lend" onclick="event.preventDefault();go('lend')">Lend an Item</a>
+   <a class="${active==='about'?'active':''}" href="?page=about" onclick="event.preventDefault();go('about')">About Us</a>
+   ${u?`<a class="${active==='activity'?'active':''}" href="?page=activity" onclick="event.preventDefault();go('activity')">My Activity</a>`:""}
+  </nav>
+  <div class="nav-actions">${account}</div>
+ </div></header>`;
+}
+function escapeHtml(v){return String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}
+function logoutUser(){localStorage.removeItem("unimartCurrentUser");toast("Logged out successfully");setTimeout(()=>go("landing"),500);}
+
+function footer(){
+ return `<footer><div class="container footer-inner"><span>© 2026 UniMart. Borrow more. Buy less.</span><span>Student-friendly lending & renting platform</span></div></footer>`;
+}
+function pageHero(title,text){return `<section class="page-hero"><div class="container"><h1>${title}</h1><p>${text}</p></div></section>`}
+function productCards(list=getAllProducts()){
+ return list.map(p=>`<article class="product"><div class="product-img">${p.icon}</div><div class="product-body"><h3>${escapeHtml(p.name)}</h3><p>${escapeHtml(p.cat)} · ${p.userListed?'Listed by a UniMart user':'Available for rent'}</p>${p.description?`<p style="margin-top:-7px">${escapeHtml(p.description)}</p>`:''}<div class="product-foot"><strong>₹${p.price}/day</strong><button class="btn btn-primary" onclick="openRent('${String(p.id).replace(/'/g,"\\'")}')">Rent item</button></div></div></article>`).join("");
+}
+function render(page){
+ let content="";
+ if(page==="landing") content=landing();
+ else if(page==="home") content=home();
+ else if(page==="browse") content=browse();
+ else if(page==="how") content=how();
+ else if(page==="lend") content=lend();
+ else if(page==="about") content=about();
+ else if(page==="login") content=login();
+ else if(page==="signup") content=signup();
+ else if(page==="activity") content=activity();
+ else content=landing();
+ document.getElementById("app").innerHTML=content;
+}
+function landing(){
+ return `<section class="hero" style="min-height:100vh;display:flex;align-items:center"><div class="container hero-grid">
+  <div><div class="eyebrow">Student marketplace</div><h1>Borrow more.<br><span style="color:#2563eb">Buy less.</span></h1>
+  <p>UniMart makes it easy to rent useful items from people around you instead of buying something you only need for a short time.</p>
+  <div class="hero-buttons"><button class="btn btn-primary" onclick="go('home')">Explore UniMart →</button><button class="btn btn-outline" onclick="go('lend')">Start lending</button></div></div>
+  <div class="hero-card"><div class="hero-card-top"><strong>Popular near you</strong><span class="badge">8 items</span></div>
+   ${products.slice(0,3).map(p=>`<div class="item-preview"><div class="item-icon">${p.icon}</div><div><strong>${p.name}</strong><div style="color:#667085;font-size:13px">${p.cat}</div></div><div class="price">₹${p.price}/day</div></div>`).join("")}
+  </div>
+ </div></section>`;
+}
+function home(){
+ return nav("home")+`<main>
+ <section class="hero"><div class="container hero-grid"><div><div class="eyebrow">Welcome to UniMart</div><h1>Everything you need, when you need it.</h1><p>Rent electronics, books, sports gear, cameras and tools without the cost of buying them.</p><div class="hero-buttons"><button class="btn btn-primary" onclick="go('browse')">Browse items</button><button class="btn btn-outline" onclick="go('lend')">List an item</button></div></div><div class="hero-card"><div class="hero-card-top"><strong>Quick rental</strong><span class="badge">Simple</span></div><p style="color:#667085">Find an item → Choose dates → Confirm your request → Enjoy it.</p></div></div></section>
+ <section class="section"><div class="container"><div class="section-head"><h2>Browse by category</h2><p>Find the right item for your next project, class or activity.</p></div><div class="cards">
+ ${[['💻','Electronics'],['📚','Books'],['📷','Cameras'],['🏸','Sports'],['🔧','Tools'],['✨','View all']].map(x=>`<button class="card category-card" onclick="go('browse')"><div class="item-icon">${x[0]}</div><h3>${x[1]}</h3><p>Explore items</p></button>`).join("")}</div></div></section>
+ <section class="section"><div class="container"><div class="section-head"><h2>Popular items</h2><p>Affordable rentals from the UniMart community.</p></div><div class="market-grid">${productCards(getAllProducts())}</div></div></section>
+ </main>${footer()}`;
+}
+function browse(){
+ return nav("browse")+`<main>${pageHero("Browse items","Explore useful items available for rent. Choose your dates and send a rental request.")}
+ <section class="section"><div class="container"><div class="filters">${["All","Electronics","Books","Cameras","Sports","Tools"].map(c=>`<button class="filter ${c==="All"?'active':''}" onclick="filterProducts('${c}',this)">${c}</button>`).join("")}</div><div class="market-grid" id="productGrid">${productCards()}</div></div></section></main>${footer()}`;
+}
+function filterProducts(cat,el){
+ document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active")); el.classList.add("active");
+ const all=getAllProducts();
+ const list=cat==="All"?all:all.filter(p=>p.cat===cat);
+ document.getElementById("productGrid").innerHTML=list.length?productCards(list):`<div class="empty">No items found in this category.</div>`;
+}
+function how(){
+ return nav("how")+`<main>${pageHero("How UniMart works","A simple way to borrow what you need and earn from things you already own.")}
+ <section class="section"><div class="container"><div class="steps">
+ ${[['1','Find an item','Browse categories and choose an item that fits your needs.'],['2','Choose dates','Select when you want to collect and return the item.'],['3','Send request','Confirm the rental request and wait for the lender.'],['4','Use & return','Use the item responsibly and return it on time.']].map(s=>`<div class="card"><div class="step-num">${s[0]}</div><h3>${s[1]}</h3><p style="color:#667085;margin-top:8px">${s[2]}</p></div>`).join("")}</div></div></section>
+ <section class="section"><div class="container dark-cta"><h2>Have something others could use?</h2><p>List it on UniMart and turn unused items into useful rentals.</p><button class="btn btn-primary" onclick="go('lend')">Start lending</button></div></section></main>${footer()}`;
+}
+function lend(){
+ return nav("lend")+`<main>${pageHero("Lend an item","List something you own and make it available to people who need it.")}
+ <section class="section"><div class="container"><form class="form-wrap" onsubmit="submitListing(event)"><div class="form-group"><label>Item name</label><input id="listingName" required placeholder="e.g. Scientific Calculator"></div><div class="form-group"><label>Category</label><select id="listingCat"><option>Electronics</option><option>Books</option><option>Cameras</option><option>Sports</option><option>Tools</option></select></div><div class="form-group"><label>Rental price per day (₹)</label><input id="listingPrice" type="number" min="1" required placeholder="100"></div><div class="form-group"><label>Description</label><textarea id="listingDesc" rows="4" required placeholder="Describe the condition and what is included"></textarea></div><button class="btn btn-primary" style="width:100%">Publish listing</button></form></div></section></main>${footer()}`;
+}
+function about(){
+ return nav("about")+`<main>${pageHero("About UniMart","A simple student-focused marketplace built around sharing, affordability and convenience.")}
+ <section class="section"><div class="container" style="max-width:850px"><h2>Our idea</h2><p style="color:#667085;font-size:17px;margin:15px 0 35px">Many useful things are needed only for a few days. UniMart connects people who need those items with people who already have them, making renting easier and more affordable.</p><div class="cards"><div class="card"><h3>Affordable</h3><p style="color:#667085;margin-top:8px">Pay for the time you actually need an item.</p></div><div class="card"><h3>Convenient</h3><p style="color:#667085;margin-top:8px">Browse and request items from one place.</p></div><div class="card"><h3>Community</h3><p style="color:#667085;margin-top:8px">Help useful items stay in use instead of sitting unused.</p></div></div></div></section></main>${footer()}`;
+}
+function activity(){
+ const u=currentUser();
+ if(!u){
+  return nav("")+`<main>${pageHero("My Activity","See your rental requests and the items you have listed.")}<section class="section"><div class="container"><div class="form-wrap" style="text-align:center"><h2>Log in to see your activity</h2><p style="color:#667085;margin:10px 0 22px">Your rental requests and listings will appear here after you sign in.</p><button class="btn btn-primary" onclick="go('login')">Log in</button></div></div></section></main>${footer()}`;
+ }
+ const rentals=JSON.parse(localStorage.getItem("unimartRentals")||"[]").filter(r=>r.email===u.email);
+ const listings=JSON.parse(localStorage.getItem("unimartListings")||"[]").filter(x=>x.email===u.email);
+ const rentalHtml=rentals.length?rentals.slice().reverse().map((r,i)=>`<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:15px;align-items:flex-start"><div><h3>${escapeHtml(r.item)}</h3><p style="color:#667085;margin-top:5px">${r.start} → ${r.end} · ${r.days} day${r.days>1?'s':''}</p></div><strong>₹${r.total}</strong></div><div style="margin-top:12px"><span class="badge">Request submitted</span></div></div>`).join(""):`<div class="empty">No rental requests yet. <button class="btn btn-primary" style="margin-left:8px" onclick="go('browse')">Browse items</button></div>`;
+ const listingHtml=listings.length?listings.slice().reverse().map(x=>`<div class="card" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;gap:15px"><div><h3>${escapeHtml(x.name)}</h3><p style="color:#667085;margin-top:5px">${escapeHtml(x.category)} · ${escapeHtml(x.description||'No description')}</p></div><strong>₹${x.price}/day</strong></div><div style="margin-top:12px"><span class="badge">Listed</span></div></div>`).join(""):`<div class="empty">You haven't listed an item yet. <button class="btn btn-primary" style="margin-left:8px" onclick="go('lend')">Lend an item</button></div>`;
+ return nav("activity")+`<main>${pageHero(`Hi, ${escapeHtml(u.name.split(" ")[0])}!`,`This is your UniMart activity centre. Every rental request and listing you create appears here.`)}<section class="section"><div class="container"><div style="display:grid;grid-template-columns:1fr 1fr;gap:25px"><div><h2 style="font-size:25px;margin-bottom:16px">My Rental Requests</h2>${rentalHtml}</div><div><h2 style="font-size:25px;margin-bottom:16px">My Listed Items</h2>${listingHtml}</div></div></div></section></main>${footer()}`;
+}
+
+function login(){
+ return nav("")+`<main>${pageHero("Welcome back","Log in to manage rentals and listings.")}
+ <section class="section"><div class="container"><form class="form-wrap" onsubmit="loginUser(event)"><div class="form-group"><label>Email</label><input id="loginEmail" type="email" required></div><div class="form-group"><label>Password</label><input id="loginPassword" type="password" required></div><div id="loginMsg" style="margin-bottom:14px"></div><button class="btn btn-primary" style="width:100%">Log in</button><p style="text-align:center;color:#667085;margin-top:18px">Don't have an account? <a href="?page=signup" onclick="event.preventDefault();go('signup')" style="color:#2563eb;font-weight:700">Sign up</a></p></form></div></section></main>${footer()}`;
+}
+function signup(){
+ return nav("")+`<main>${pageHero("Create your UniMart account","Sign up to rent items or start lending.")}
+ <section class="section"><div class="container"><form class="form-wrap" onsubmit="signupUser(event)"><div class="form-group"><label>Full name</label><input id="signupName" required></div><div class="form-group"><label>Email</label><input id="signupEmail" type="email" required></div><div class="form-group"><label>Password</label><input id="signupPassword" type="password" minlength="6" required></div><div class="form-group"><label>Confirm password</label><input id="signupConfirm" type="password" required></div><div id="signupMsg" style="margin-bottom:14px"></div><button class="btn btn-primary" style="width:100%">Create account</button><p style="text-align:center;color:#667085;margin-top:18px">Already registered? <a href="?page=login" onclick="event.preventDefault();go('login')" style="color:#2563eb;font-weight:700">Log in</a></p></form></div></section></main>${footer()}`;
+}
+function openRent(id){
+ const p=getAllProducts().find(x=>String(x.id)===String(id));
+ if(!p){toast("This item could not be found.");return}
+ document.getElementById("rentName").textContent=p.name;
+ document.getElementById("rentModal").dataset.id=String(id);
+ const today=new Date().toISOString().split("T")[0];
+ document.getElementById("startDate").min=today; document.getElementById("endDate").min=today;
+ document.getElementById("startDate").value=""; document.getElementById("endDate").value="";
+ document.getElementById("totalBox").textContent=`₹${p.price}/day · Select dates to calculate the total.`;
+ document.getElementById("rentModal").classList.add("show");
+}
+function closeRent(){document.getElementById("rentModal").classList.remove("show")}
+document.addEventListener("change",e=>{
+ if(e.target.id==="startDate"||e.target.id==="endDate"){
+  const s=new Date(document.getElementById("startDate").value), en=new Date(document.getElementById("endDate").value);
+  if(!isNaN(s)&&!isNaN(en)&&en>s){
+   const days=Math.ceil((en-s)/86400000), id=document.getElementById("rentModal").dataset.id, p=getAllProducts().find(x=>String(x.id)===String(id));
+   if(p) document.getElementById("totalBox").textContent=`${days} day${days>1?'s':''} × ₹${p.price} = ₹${days*p.price}`;
+  }
+ }
+});
+function confirmRent(){
+ const u=currentUser();
+ if(!u){closeRent();toast("Please log in before sending a rental request.");setTimeout(()=>go("login"),700);return}
+ const s=document.getElementById("startDate").value,en=document.getElementById("endDate").value;
+ if(!s||!en||new Date(en)<=new Date(s)){toast("Please choose a valid return date.");return}
+ const id=document.getElementById("rentModal").dataset.id,p=getAllProducts().find(x=>String(x.id)===String(id));
+ if(!p){toast("This item could not be found.");return}
+ const days=Math.ceil((new Date(en)-new Date(s))/86400000);
+ const req=JSON.parse(localStorage.getItem("unimartRentals")||"[]");
+ req.push({item:p.name,itemId:String(p.id),start:s,end:en,days,total:days*p.price,email:u.email,name:u.name,status:"Request submitted",created:new Date().toISOString()});
+ localStorage.setItem("unimartRentals",JSON.stringify(req));
+ closeRent();toast("Rental request submitted ✓");setTimeout(()=>go("activity"),700);
+}
+function signupUser(e){
+ e.preventDefault(); const name=signupName.value.trim(),email=signupEmail.value.trim().toLowerCase(),pass=signupPassword.value,conf=signupConfirm.value;
+ if(pass!==conf){signupMsg.innerHTML='<span style="color:#c62828">Passwords do not match.</span>';return}
+ const users=JSON.parse(localStorage.getItem("unimartUsers")||"[]");
+ if(users.some(u=>u.email===email)){signupMsg.innerHTML='<span style="color:#c62828">An account with this email already exists.</span>';return}
+ users.push({name,email,pass});localStorage.setItem("unimartUsers",JSON.stringify(users));localStorage.setItem("unimartCurrentUser",JSON.stringify({name,email}));
+ toast("Account created successfully ✓"); setTimeout(()=>go("home"),700);
+}
+function loginUser(e){
+ e.preventDefault();const email=loginEmail.value.trim().toLowerCase(),pass=loginPassword.value;
+ const users=JSON.parse(localStorage.getItem("unimartUsers")||"[]"),u=users.find(x=>x.email===email&&x.pass===pass);
+ if(!u){loginMsg.innerHTML='<span style="color:#c62828">Incorrect email or password.</span>';return}
+ localStorage.setItem("unimartCurrentUser",JSON.stringify({name:u.name,email:u.email}));toast("Logged in successfully ✓");setTimeout(()=>go("home"),700);
+}
+function submitListing(e){
+ e.preventDefault();
+ const u=currentUser();
+ if(!u){toast("Please log in before listing an item.");setTimeout(()=>go("login"),700);return}
+ const listings=JSON.parse(localStorage.getItem("unimartListings")||"[]");
+ listings.push({id:"user-"+Date.now(),name:listingName.value.trim(),category:listingCat.value,price:+listingPrice.value,description:listingDesc.value.trim(),email:u.email,owner:u.name,created:new Date().toISOString()});
+ localStorage.setItem("unimartListings",JSON.stringify(listings));
+ e.target.reset();toast("Item listed successfully ✓");setTimeout(()=>go("activity"),700);
+}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600)}
+route();
+</script>
+</body>
+</html>
